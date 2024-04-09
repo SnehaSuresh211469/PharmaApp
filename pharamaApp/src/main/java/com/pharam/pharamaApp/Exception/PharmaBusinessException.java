@@ -4,13 +4,13 @@ public class PharmaBusinessException extends  Exception{
     public  enum  PharmaBusinessExceptionCode{
         A(510), B(511), C(512),D(513);
 
-        private int numVal;
-        PharmaBusinessExceptionCode(int numVal) {
-            this.numVal = numVal;
+        private int errorCodeMsg;
+        PharmaBusinessExceptionCode(int errorCodeMsg) {
+            this.errorCodeMsg = errorCodeMsg;
         }
 
         public int getNumVal() {
-            return numVal;
+            return errorCodeMsg;
         }
 
     }
@@ -19,7 +19,7 @@ public class PharmaBusinessException extends  Exception{
         super(message);
     }
     public PharmaBusinessException(PharmaBusinessExceptionCode errorCode,String message) {
-        super(message);
+        super(errorCode.errorCodeMsg+" "+message);
         this.errorCode=errorCode;
     }
 }

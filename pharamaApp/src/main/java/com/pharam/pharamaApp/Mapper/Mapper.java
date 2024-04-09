@@ -13,15 +13,13 @@ public class Mapper {
     @Autowired
     private  Batch batch;
     public Batch converToEntity(BatchDTO batchDTO, BigDecimal shippingCharge){
-
           batch.setBatchCode(batchDTO.getBatchCode());
           batch.setCareLevel(batchDTO.getCareLevel());
           batch.setWeight(batchDTO.getWeight());
           batch.setMedicineCode(batchDTO.getMedicineCode());
           batch.setShippingCharge(shippingCharge);
-          batch.setMedicineTypeCode(batchDTO.getMedicneTypeCode());
+          batch.setMedicineTypeCode(batchDTO.getMedicineTypeCode());
           batch.setPrice(batchDTO.getPrice());
-
           return  batch;
     }
 }

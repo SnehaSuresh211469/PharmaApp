@@ -36,6 +36,7 @@ public class Batch
     @Column(name = "PRICE")
     private  BigDecimal price;
 
+
     public BigDecimal getPrice() {
         return price;
     }

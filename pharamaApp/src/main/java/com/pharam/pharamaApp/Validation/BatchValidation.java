@@ -31,44 +31,32 @@ public class BatchValidation {
     private ShippingMasterRepository shippingMasterRepository;
 
     Logger logger = LoggerFactory.getLogger(BatchValidation.class);
-
-    //medicine code does not exist
+    
     public  String addBatchValidation(BatchDTO batch) throws PharmaBusinessException {
-        Optional<MedicineMaster> medicineMaster= Optional.ofNullable(medicineMasterRepository.findByMedicineCode(batch.getMedicineCode()));
-       Optional<Batch> batch1= Optional.ofNullable(batchRepository.findByBatchCode(batch.getBatchCode()));
-       if(medicineMaster.isEmpty() ){
-           logger.error("medicine code does not exist");
-            throw  new PharmaBusinessException(PharmaBusinessException.PharmaBusinessExceptionCode.A,"medicine code does not exist");
-        }
-        //batchcode already exist
-        if(!batch1.isEmpty()) {
-            logger.error("batchcode already exist");
-            throw  new PharmaBusinessException(PharmaBusinessException.PharmaBusinessExceptionCode.B,"batchcode already exist");
-        }
         //batch weight <100
         if(batch.getWeight()<100) {
-            logger.error("batch weight <100");
+            logger.error("512-Batch Weight Should be greater than 100");
             throw  new PharmaBusinessException(PharmaBusinessException.PharmaBusinessExceptionCode.C,"batch weight <100");
         }
+        
         //batch code not in the format “BTC-”
         if(!batch.getBatchCode().startsWith("BTC-"))   {
-            logger.error("wrong batch format");
+            logger.error("513-Batch format wrong.It should be in the format “BTC-1234”");
             throw  new PharmaBusinessException(PharmaBusinessException.PharmaBusinessExceptionCode.D,"wrong batch format");
         }
-        
-       return  "OK";
+       return  "Ok";
     }
 
     public  String weightToRangeConverter(Double weight){
+        
          if(weight<=500){
              return "W1";
          }
-
+         
          if(weight<=1000){
              return  "W2";
          }
          else
              return  "W3";
-
     }
 }

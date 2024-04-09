@@ -1,8 +1,11 @@
 package com.pharam.pharamaApp.DTO;
 
 
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 
+@Component
 public class BatchDTO {
 
     private  String batchCode;
@@ -11,7 +14,7 @@ public class BatchDTO {
 
     private Double weight;
 
-    private  String medicneTypeCode;
+    private  String medicineTypeCode;
     private  String careLevel;
 
     private  String refrigeration;
@@ -34,13 +37,15 @@ public class BatchDTO {
         return refrigeration;
     }
 
-    public String getMedicneTypeCode() {
-        return medicneTypeCode;
+
+    public String getMedicineTypeCode() {
+        return medicineTypeCode;
     }
 
-    public void setMedicneTypeCode(String medicneTypeCode) {
-        this.medicneTypeCode = medicneTypeCode;
+    public void setMedicineTypeCode(String medicineTypeCode) {
+        this.medicineTypeCode = medicineTypeCode;
     }
+
     public void setRefrigeration(String refrigeration) {
         this.refrigeration = refrigeration;
     }
