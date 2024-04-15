@@ -22,8 +22,6 @@ public class BatchValidation {
     private BatchRepository batchRepository;
     @Autowired
     private MedicineMasterRepository medicineMasterRepository;
-
-
     @Autowired
     private MedicineTypeMasterRepository medicineTypeMasterRepository;
 

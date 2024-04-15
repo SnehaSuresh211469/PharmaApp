@@ -32,6 +32,7 @@ public class BatchDAO {
 
     @Autowired
     private BatchValidation batchValidation;
+    
     @Autowired
     private ShippingMasterRepository shippingMasterRepository;
 
@@ -41,16 +42,18 @@ public class BatchDAO {
         return  true;
     }
     public Boolean checkBatchCode(BatchDTO batchDTO) throws PharmaBusinessException {
-        //batchcode already exist
+        //batch code already exist
+        logger.info("checking if the batch code already exists or not");
         Optional<Batch> batch1= Optional.ofNullable(batchRepository.findByBatchCode(batchDTO.getBatchCode()));
             if(!batch1.isEmpty()) {
-                logger.error("511-Batchcode already exist");
+                logger.error("511-Batch code already exist");
                 throw  new PharmaBusinessException(PharmaBusinessException.PharmaBusinessExceptionCode.B,"batchcode already exist");
             }
             return  false;
     }
 
     public  Boolean checkMedicineCode(String medicineCode) throws PharmaBusinessException {
+        logger.info("checkin if the medicine code already exists or not");
         Optional<MedicineMaster> medicineMaster= Optional.ofNullable(medicineMasterRepository.findByMedicineCode(medicineCode));
         if(medicineMaster.isEmpty() ){
             logger.error("510-Medicine Code Does Not Exist");
@@ -59,14 +62,14 @@ public class BatchDAO {
         return  false;
     }
 
-    public BigDecimal getShippingCharge(String medicineCode,String  weightRange,BatchDTO batchDTO){
+    public BigDecimal getShippingCharge(String medicineCode,String  weightRange) throws PharmaBusinessException {
+        logger.info("calculating the shipping charge");
         ShippingMaster shippingMaster= shippingMasterRepository.findByMedicineTypeCodeAndWeightRange(medicineCode,weightRange);
-        if(batchDTO.getRefrigeration().equalsIgnoreCase("yes"))  {
-            BigDecimal refrigerationCharge = shippingMaster.getShippingCharge().multiply(BigDecimal.valueOf(0.05));
-            return  refrigerationCharge;
+        if(shippingMaster!=null){
+            return  shippingMaster.getShippingCharge();
         }
         else {
-            return  shippingMaster.getShippingCharge();
+            throw  new PharmaBusinessException(PharmaBusinessException.PharmaBusinessExceptionCode.E,"Shipping charge is available") ;
         }
     }
 }
